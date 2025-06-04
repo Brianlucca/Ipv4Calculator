@@ -14,14 +14,14 @@ export interface NetworkAnalysis {
   error?: string;
 }
 
-function ipToLong(ip: string): number {
+export function ipToLong(ip: string): number {
   return ip.split('.').reduce((acc, octetString, index) => {
     const octet = parseInt(octetString, 10);
     return acc + (octet << (24 - index * 8));
   }, 0) >>> 0;
 }
 
-function longToIp(longIp: number): string {
+export function longToIp(longIp: number): string {
   return [
     (longIp >>> 24) & 255,
     (longIp >>> 16) & 255,
@@ -60,7 +60,7 @@ function countSetBits(n: number): number {
   return count;
 }
 
-function cidrToMaskString(cidr: number): string {
+export function cidrToMaskString(cidr: number): string {
   if (cidr < 0 || cidr > 32 || isNaN(cidr)) {
     throw new Error("Prefixo CIDR inválido (deve ser um número entre 0 e 32).");
   }
