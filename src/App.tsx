@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import IpInputForm from './components/IpInputForm';
 import ResultsDisplay from './components/ResultsDisplay';
-import SubnetVisualizer from './components/SubnetVisualizer'; // Importar o visualizador
-import SubnetPlanner from './components/SubnetPlanner';   // Importar o planejador
+import SubnetVisualizer from './components/SubnetVisualizer'; 
+import SubnetPlanner from './components/SubnetPlanner';  
 import { analyzeIp, type NetworkAnalysis } from './utils/ipCalculator';
 import GitHubIcon from './components/GithubIcon';
 
@@ -14,7 +14,7 @@ const App: React.FC = () => {
     setAnalysisResult(result);
   }, []);
 
-  const GITHUB_PROFILE_URL = 'https://github.com/SEU_USUARIO_AQUI'; // Lembre-se de trocar
+  const GITHUB_PROFILE_URL = 'https://github.com/Brianlucca';
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center py-10 px-4">
@@ -27,12 +27,12 @@ const App: React.FC = () => {
         </p>
       </header>
 
-      <main className="w-full max-w-3xl px-2"> {/* Aumentei um pouco o max-w */}
+      <main className="w-full max-w-3xl px-2">
         <IpInputForm onCalculate={handleCalculate} />
         {analysisResult && <ResultsDisplay analysis={analysisResult} />}
         {analysisResult && analysisResult.isValid && <SubnetVisualizer analysis={analysisResult} />}
         
-        <hr className="my-12 border-gray-700" /> {/* Separador visual */}
+        <hr className="my-12 border-gray-700" />
 
         <SubnetPlanner />
       </main>
