@@ -1,17 +1,17 @@
 # Calculadora e Analisador IPv4 🌐
 
-Uma ferramenta front-end interativa construída com React, TypeScript e Tailwind CSS para calcular e analisar informações detalhadas de redes IPv4 a partir de um endereço IP e sua máscara de sub-rede (ou prefixo CIDR).
+Uma ferramenta front-end interativa construída com React, TypeScript e Tailwind CSS para calcular e analisar informações detalhadas de redes IPv4, visualizar sub-redes e planejar novas sub-redes de tamanho fixo.
 
 ## 📜 Descrição
 
-Este projeto visa fornecer uma interface amigável e educativa para usuários que precisam entender ou trabalhar com o endereçamento IPv4. Ao inserir um endereço IP e selecionar uma máscara de sub-rede/CIDR, a calculadora exibe informações cruciais como endereço de rede, endereço de broadcast, faixa de IPs utilizáveis, número total de hosts, número de hosts utilizáveis, máscara wildcard e se o IP é privado.
+Este projeto visa fornecer uma interface amigável e educativa para usuários que precisam entender ou trabalhar com o endereçamento IPv4. Ao inserir um endereço IP e selecionar uma máscara de sub-rede/CIDR, a calculadora exibe informações cruciais como endereço de rede, endereço de broadcast, faixa de IPs utilizáveis, e mais. Adicionalmente, apresenta uma visualização gráfica da sub-rede analisada e uma ferramenta para planejar a divisão de um bloco de rede em múltiplas sub-redes de tamanho fixo.
 
 A ferramenta foi desenvolvida sem a necessidade de um back-end, realizando todos os cálculos diretamente no navegador.
 
 ## ✨ Funcionalidades
 
 * Entrada de endereço IPv4.
-* Seleção de Máscara de Sub-rede/CIDR através de um menu dropdown (de /0 a /32).
+* Seleção de Máscara de Sub-rede/CIDR através de um menu dropdown (de /0 a /32) para a calculadora principal.
 * Cálculo e exibição instantânea de:
     * Endereço de Rede
     * Endereço de Broadcast
@@ -21,8 +21,10 @@ A ferramenta foi desenvolvida sem a necessidade de um back-end, realizando todos
     * Número de Hosts Utilizáveis
     * Máscara Wildcard
     * Identificação de IP Privado
+* **Visualização gráfica da sub-rede analisada**, mostrando a distribuição dos endereços de rede, utilizáveis e de broadcast.
+* **Ferramenta para planejamento de sub-redes de tamanho fixo**, permitindo ao usuário especificar um bloco de rede base e o número de sub-redes desejadas.
 * Interface responsiva e estilizada com Tailwind CSS.
-* Validação de entrada para o formato do endereço IP.
+* Validação de entrada para o formato do endereço IP e para os parâmetros do planejador de sub-redes.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -31,15 +33,34 @@ A ferramenta foi desenvolvida sem a necessidade de um back-end, realizando todos
 * **Tailwind CSS:** Framework CSS utility-first para estilização rápida.
 * **Vite:** Ferramenta de build front-end moderna e rápida.
 
-
 ## ⚙️ Como Usar
+
+A aplicação é dividida em duas ferramentas principais: a Calculadora/Analisador de IPv4 e o Planejador de Sub-redes.
+
+### Calculadora Principal e Analisador IPv4
 
 1.  **Insira o Endereço IP:** No campo "Endereço IP:", digite o endereço IPv4 que você deseja analisar (ex: `192.168.1.10`).
 2.  **Selecione a Máscara de Sub-rede (CIDR):** No campo "Máscara de Sub-rede (CIDR):", utilize o menu dropdown para selecionar a máscara de sub-rede desejada. As opções são exibidas no formato `MÁSCARA (PREFIXO_CIDR)`, por exemplo, `255.255.255.0 (/24)`.
 3.  **Calcular:** Clique no botão "Calcular".
-4.  **Visualizar Resultados:** Os resultados da análise serão exibidos abaixo do formulário.
+4.  **Visualizar Resultados:** Os resultados da análise textual serão exibidos abaixo do formulário.
 
-## 📊 Entendendo os Resultados
+### Visualização Gráfica da Sub-rede
+
+* Após um cálculo bem-sucedido na Calculadora Principal, uma visualização gráfica da sub-rede analisada aparecerá abaixo dos resultados textuais.
+* Ela mostra blocos representando o Endereço de Rede, a Faixa de IPs Utilizáveis e o Endereço de Broadcast, ajudando a entender a estrutura da sub-rede. O IP inserido também é destacado se estiver dentro da faixa utilizável.
+
+### Planejador de Sub-redes (Tamanho Fixo)
+
+Esta ferramenta permite dividir um bloco de rede maior em várias sub-redes menores de tamanho igual.
+
+1.  **Acesse o Planejador:** Role a página para baixo, abaixo da calculadora principal e da visualização gráfica.
+2.  **IP Base da Rede:** Digite o endereço de rede do bloco IP que você deseja dividir (ex: `192.168.0.0`). É importante que este seja o endereço de rede real do bloco base.
+3.  **CIDR Base:** Selecione o prefixo CIDR do bloco IP base no menu dropdown (ex: `/24`).
+4.  **Nº de Sub-redes Desejadas:** Digite o número de sub-redes menores que você deseja criar a partir do bloco base.
+5.  **Planejar:** Clique no botão "Planejar Sub-redes".
+6.  **Ver Resultados do Planejamento:** Se as entradas forem válidas e o planejamento for possível, uma tabela será exibida com os detalhes de cada sub-rede gerada.
+
+## 📊 Entendendo os Resultados (da Calculadora Principal)
 
 A calculadora exibe várias informações sobre a rede IPv4. Aqui está o significado de cada uma delas:
 
@@ -101,6 +122,36 @@ A calculadora exibe várias informações sobre a rede IPv4. Aqui está o signif
         * `192.168.0.0` a `192.168.255.255` (`192.168.0.0/16`)
     * **Características:** Esses IPs não são roteáveis na internet pública e podem ser reutilizados por múltiplas redes privadas sem conflito. A comunicação com a internet é feita através de NAT (Network Address Translation).
 
+## 📋 Entendendo o Planejador de Sub-redes
+
+O Planejador de Sub-redes ajuda a dividir um bloco de IP maior em várias sub-redes menores de tamanhos iguais.
+
+### Propósito
+
+* **Organização:** Separar diferentes segmentos de rede.
+* **Segurança:** Isolar redes para melhor controle de acesso.
+* **Eficiência:** Reduzir o tráfego de broadcast.
+* **Gerenciamento:** Facilitar a administração de porções menores da rede.
+
+### Como Funciona (A Lógica)
+
+1.  **Validação:** As entradas (IP base, CIDR base, número de sub-redes) são validadas. O IP base deve ser um endereço de rede válido para o CIDR base fornecido.
+2.  **Cálculo de Bits Emprestados:** Para criar as sub-redes, bits são "emprestados" da porção de host do bloco original. O número de bits a emprestar é `Math.ceil(Math.log2(NumeroDeSubredesDesejadas))`.
+3.  **Novo CIDR das Sub-redes:** O CIDR de cada nova sub-rede é `CIDR Base + Bits Emprestados`. Um CIDR maior significa uma rede menor.
+4.  **Número Real de Sub-redes:** O número de sub-redes efetivamente criadas será $2^{\text{Bits Emprestados}}$ (pode ser maior que o solicitado se o número desejado não for uma potência de 2).
+5.  **Tamanho de Cada Sub-rede:** Cada nova sub-rede terá um tamanho total de $2^{(32 - \text{Novo CIDR})}$ endereços. Este valor também serve como incremento para encontrar o próximo endereço de rede.
+6.  **Geração das Sub-redes:** O planejador itera, calculando o endereço de rede de cada nova sub-rede (`EndereçoDeRedeBase + (i * TamanhoDaSubrede)`). Para cada uma, a função `analyzeIp` é usada para obter todos os seus detalhes.
+
+### Interpretando a Tabela de Sub-redes Planejadas
+
+A tabela de resultados do planejador mostrará, para cada sub-rede gerada:
+
+* **Rede/CIDR:** O endereço de rede e o prefixo CIDR da sub-rede (ex: `192.168.0.0/26`).
+* **Máscara:** A máscara de sub-rede em formato decimal (ex: `255.255.255.192`).
+* **Faixa Utilizável:** O primeiro e o último IP que podem ser usados por dispositivos.
+* **Broadcast:** O endereço de broadcast da sub-rede.
+* **Hosts Utilizáveis:** Quantos dispositivos podem ser conectados.
+
 ## 🧠 Lógica Principal dos Cálculos
 
 Os cálculos de rede são realizados no arquivo `src/utils/ipCalculator.ts`. A lógica principal envolve:
@@ -108,7 +159,7 @@ Os cálculos de rede são realizados no arquivo `src/utils/ipCalculator.ts`. A l
 1.  **Conversão de IP para Número:** Endereços IP e máscaras em formato string (ex: "192.168.1.10") são convertidos para suas representações numéricas de 32 bits para facilitar operações bitwise.
 2.  **Operações Bitwise:** Operações lógicas como AND, OR, e NOT bit a bit são usadas para determinar o endereço de rede, broadcast e wildcard a partir do IP e da máscara numérica.
 3.  **Manipulação de CIDR:** O prefixo CIDR é usado para determinar o número de bits de rede e de host, o que é fundamental para calcular o número total de hosts e a faixa de hosts utilizáveis.
-4.  **Validações:** Funções de validação garantem que os formatos de IP e máscara (quando aplicável) sejam corretos antes de prosseguir com os cálculos.
+4.  **Validações:** Funções de validação garantem que os formatos de IP e máscara (quando aplicável) sejam corretos antes de prosseguir com os cálculos. O planejamento de sub-redes também inclui validações específicas para a viabilidade da divisão.
 
 ## 🤝 Contribuições
 
@@ -117,6 +168,3 @@ Contribuições são bem-vindas! Se você tiver sugestões para melhorar esta ca
 ## 👤 Autor
 
 * **Brian Lucca**
-
-
----
