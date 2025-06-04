@@ -1,18 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import IpInputForm from './components/IpInputForm';
 import ResultsDisplay from './components/ResultsDisplay';
+import SubnetVisualizer from './components/SubnetVisualizer'; // Importar o visualizador
+import SubnetPlanner from './components/SubnetPlanner';   // Importar o planejador
 import { analyzeIp, type NetworkAnalysis } from './utils/ipCalculator';
-import GitHubIcon from './components/GithubIcon'
+import GitHubIcon from './components/GithubIcon';
 
 const App: React.FC = () => {
   const [analysisResult, setAnalysisResult] = useState<NetworkAnalysis | null>(null);
 
-  const handleCalculate = useCallback((ip: string, subnet: string) => {
-    const result = analyzeIp(ip, subnet);
+  const handleCalculate = useCallback((ip: string, subnetCidr: string) => {
+    const result = analyzeIp(ip, subnetCidr);
     setAnalysisResult(result);
   }, []);
 
-  const GITHUB_PROFILE_URL = 'https://github.com/Brianlucca';
+  const GITHUB_PROFILE_URL = 'https://github.com/SEU_USUARIO_AQUI'; // Lembre-se de trocar
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center py-10 px-4">
@@ -21,13 +23,18 @@ const App: React.FC = () => {
           Calculadora e Analisador IPv4
         </h1>
         <p className="text-gray-400 mt-2">
-          Insira um endereço IP e uma máscara de sub-rede (ou CIDR) para ver os detalhes.
+          Insira um endereço IP e selecione uma máscara de sub-rede (CIDR) para ver os detalhes.
         </p>
       </header>
 
-      <main className="w-full max-w-2xl">
+      <main className="w-full max-w-3xl px-2"> {/* Aumentei um pouco o max-w */}
         <IpInputForm onCalculate={handleCalculate} />
         {analysisResult && <ResultsDisplay analysis={analysisResult} />}
+        {analysisResult && analysisResult.isValid && <SubnetVisualizer analysis={analysisResult} />}
+        
+        <hr className="my-12 border-gray-700" /> {/* Separador visual */}
+
+        <SubnetPlanner />
       </main>
 
       <footer className="mt-12 text-center text-gray-500 text-sm">
