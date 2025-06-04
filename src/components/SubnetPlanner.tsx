@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { analyzeIp, type NetworkAnalysis, } from '../utils/ipCalculator';
+import { analyzeIp } from '../utils/ipCalculator';
 import { longToIp, ipToLong, cidrToMaskString as utilCidrToMaskString } from '../utils/ipCalculator';
 
 
